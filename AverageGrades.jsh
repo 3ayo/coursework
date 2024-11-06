@@ -1,40 +1,40 @@
-System.out.println("Enter the grades separated by commas: ");
-String gradeInput = $1; // 读取用户输入的第一个字符串，包含用逗号分隔的分数
-String[] stringNumbers = gradeInput.split(",");
+Scanner scanner = new Scanner(System.in);
 
-System.out.println("Enter the weights separated by commas: ");
-String weightInput = $2; // 读取用户输入的第二个字符串，包含用逗号分隔的权重
-String[] weightStrings = weightInput.split(",");
-int[] weights = new int[weightStrings.length];
-for (int i = 0; i < weightStrings.length; i++) {
-    weights[i] = Integer.parseInt(weightStrings[i].trim());
+System.out.print("请输入数组的大小: ");
+int size = scanner.nextInt(); 
+int[] grades = new int[size];
+
+System.out.println("请输入成绩数组的元素:");
+for (int j = 0; j < size; j++) {
+    grades[j] = scanner.nextInt(); 
 }
 
-int[][] grades = new int[stringNumbers.length][];
-for (int i = 0; i < stringNumbers.length; i++) {
-    grades[i] = new int[stringNumbers[i].split(",").length];
-    for (int j = 0; j < grades[i].length; j++) {
-        grades[i][j] = Integer.parseInt(stringNumbers[i].split(",")[j].trim());
-    }
+int[] weights = new int[size];
+
+System.out.println("请输入加权数组的元素:");
+for (int j = 0; j < size; j++) {
+    weights[j] = scanner.nextInt(); 
 }
 
-int[] averages = average_grades(grades, weights);
+scanner.close();
 
-for (int i = 0; i < averages.length; i++) {
-    System.out.println("Student " + (i + 1) + "'s weighted average grade: " + averages[i]);
-}
-
-int[] average_grades(int[][] grades, int[] weights) {
-    int students = grades.length;
+int[] average_grades(int[] grades, int[] weights) {
+    int students = 1;
     int[] averages = new int[students];
 
     for (int i = 0; i < students; i++) {
         int sum = 0;
-        for (int j = 0; j < grades[i].length; j++) {
-            sum += grades[i][j] * weights[j];
+        for (int j = 0; j < grades.length; j++) {
+            sum += grades[j] * weights[j];
         }
         averages[i] = sum / 100;
     }
 
     return averages;
+}
+
+int[] averages = average_grades(grades, weights);
+System.out.println("加权平均分为:");
+for (int average : averages) {
+    System.out.println(average);
 }
